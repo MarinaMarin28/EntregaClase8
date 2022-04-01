@@ -37,15 +37,20 @@ export const AddProducts = async product => {
 };
 
 export const updateProductsById = async newProduct => {
-    const productsAux = products.filter(p => p.id != newProduct.id);
-    const productFilter = await getProductsById(newProduct.id);
-    productFilter.id = newProduct.id
-    productFilter.title = newProduct.title
-    productFilter.price = newProduct.price
-    productFilter.thumbnail = newProduct.thumbnail
-    products = productsAux;
-    products.push(productFilter);
-    return productFilter;
+    try {
+        const productsAux = products.filter(p => p.id != newProduct.id);
+        const productFilter = await getProductsById(newProduct.id);
+        productFilter.id = newProduct.id
+        productFilter.title = newProduct.title
+        productFilter.price = newProduct.price
+        productFilter.thumbnail = newProduct.thumbnail
+        products = productsAux;
+        products.push(productFilter);
+        return productFilter;
+    } catch (error) {
+        return `Error: producto no encontrado`;
+    }
+    
 }
 
 export const deleteProductsById =  id => {
